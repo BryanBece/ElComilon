@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block titulo %}
+
+<title>Nosotros</title>
+
+{% endblock %}
+
+
+{% block contenido %}
+
+<section id="contact" class="contact">
+    <div class="container aos-init aos-animate" data-aos="fade-up" style="text-align: center;">
+
+        <div class="section-header">
+            <h2>El Comilón</h2>
+            <p>Sobre <span>Nosotros</span></p>
+        </div>
+
+        <div class="mb-3">
+            <img src="{% static './images/Restorant/Foto_chef.jpeg' %}" class="img-fluid aos-init aos-animate"
+                alt="" data-aos="zoom-out" data-aos-delay="300"
+                style="max-height: 500px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        </div>
+        
+
+        <p style="text-align: justify;" class="fst-italic">
+            Somos un acogedor restaurante ubicado en el corazón de la hermosa comuna de Santiago, Chile. En El Comilón,
+            nos enorgullece ofrecerte una experiencia gastronómica excepcional, basada en nuestras deliciosas comidas
+            caseras.
+            <br><br>
+            En nuestro restaurante, creemos que la comida casera es un arte, y nos esforzamos por mantener viva la
+            tradición culinaria de la región. Nuestro equipo de talentosos chefs, apasionados por la cocina, selecciona
+            cuidadosamente los ingredientes más frescos y de alta calidad para crear platos caseros llenos de sabor y
+            amor.
+            <br><br>
+            En El Comilón, te invitamos a disfrutar de un ambiente acogedor y familiar, donde cada visita es como estar
+            en casa. Nuestro personal amable y atento se asegurará de que te sientas cómodo y bienvenido, mientras te
+            deleitas con nuestras especialidades culinarias.
+            <br><br>
+            Nuestra carta ofrece una amplia variedad de platos caseros, desde clásicos favoritos hasta creaciones
+            únicas y sabores innovadores. Ya sea que desees saborear nuestras exquisitas pastas hechas a mano, probar
+            nuestros suculentos platos de carne o disfrutar de nuestras frescas opciones vegetarianas, siempre
+            encontrarás algo que satisfaga tus antojos.
+            <br><br>
+            En El Comilón, nos preocupamos por tu satisfacción y bienestar. Por eso, nos esforzamos por brindarte
+            opciones saludables y adaptarnos a tus necesidades dietéticas. Si tienes alguna restricción alimentaria o
+            preferencia específica, no dudes en informarnos y estaremos encantados de personalizar tu experiencia
+            culinaria.
+            <br><br>
+            Además de nuestra deliciosa comida, también ofrecemos una selección cuidadosamente elaborada de vinos y
+            bebidas para complementar tus platos. Nuestro equipo de sommeliers estará encantado de recomendarte la
+            opción perfecta para realzar tus sabores favoritos.
+            <br><br>
+            En El Comilón, valoramos tu visita y nos esforzamos por brindarte una experiencia culinaria memorable que
+            querrás repetir una y otra vez. Esperamos poder servirte pronto y brindarte momentos de alegría y
+            satisfacción a través de nuestras comidas caseras preparadas con amor y pasión.
+        </p>
+
+    </div>
+</section>
+
+
+
+{% endblock %}

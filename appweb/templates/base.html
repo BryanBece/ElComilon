@@ -2,37 +2,54 @@
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js"
-        integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-mzK14yye5Z8XfW1aq6I5l5bQ/sffw8UtiWvb83MFmf/YU6nyBoDkR8vyZjQ4+be1"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
-    <script src="https://kit.fontawesome.com/3f772b6724.js" crossorigin="anonymous"></script>
-    {% load static %}
-    <script src="{% static './js/jquery-3.6.4.min.js' %}"></script>
-    <script src="{% static './js/main.js' %}"></script>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="{% static './Images/logo-favicon.png' %}" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js"
+    integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-mzK14yye5Z8XfW1aq6I5l5bQ/sffw8UtiWvb83MFmf/YU6nyBoDkR8vyZjQ4+be1"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css" />
+  <script src="https://kit.fontawesome.com/3f772b6724.js" crossorigin="anonymous"></script>
+  {% load static %}
+  <script src="{% static './js/jquery-3.6.4.min.js' %}"></script>
+  <script src="{% static './js/main.js' %}"></script>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="icon" href="{% static './Images/logo-favicon.png' %}" type="image/x-icon">
 
-    {% block titulo %}
-    <title></title>
-    {% endblock %}
+  {% block titulo %}
+  <title></title>
+  {% endblock %}
 
 </head>
 
 <body>
+
+  {% if messages %}
+  {% for message in messages %}
+
+  <script>
+    Swal.fire({
+      icon: '{{ message.tags }}',
+      title: '{{ message }}',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  </script>
+
+  {% endfor %}
+  {% endif %}
+  <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
       <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto me-lg-0">
@@ -42,29 +59,35 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="{% url 'home' %}">Inicio<i class="fa-solid fa-house fa-lg"></i></a></li>
-          <li><a href="#Menu">Menú<i class="fa-solid fa-book-open fa-lg"></i></a></li>
-          <li><a href="#Nosotros">Nosotros<i class="fa-solid fa-circle-info fa-lg"></i></a></li>
+          <li><a href="{% url 'menu' %}">Menú<i class="fa-solid fa-book-open fa-lg"></i></a></li>
+          <li><a href="{% url 'nosotros' %}">Nosotros<i class="fa-solid fa-circle-info fa-lg"></i></a></li>
           <li><a href="{% url 'contacto' %}">Contacto<i class="fa-solid fa-phone fa-lg"></i></a></li>
-          <li><a href="#Ingresar">Ingresar<i  class="fa-solid fa-circle-user fa-lg"></i></a></li>
+
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Cerrar Sesión<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
+          {% else %}
+          <li><a href="{% url 'login' %}">Ingresar<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
+          {% endif %}
         </ul>
       </nav>
 
-      <a class="btn-book-a-table" href="#Pedido">Pide Aqui<i class="fa-solid fa-cart-shopping fa-lg"></i></a>
+      <a class="btn-book-a-table" href="#Pedido" data-bs-toggle="modal" data-bs-target="#modalError">Pide Aqui<i
+          class="fa-solid fa-cart-shopping fa-lg"></i></a>
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     </div>
   </header>
-    <br><br>
+  <br><br>
 
-    <main id="main" class="mt-5">
-        <div id="contenido">
-            {% block contenido %}
-            {% endblock %}
-        </div>
-    </main>
+  <main id="main" class="mt-5">
+    <div id="contenido">
+      {% block contenido %}
+      {% endblock %}
+    </div>
+  </main>
 
 
-              <!-- ======= Footer ======= -->
+  <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
     <div class="container">
@@ -72,7 +95,7 @@
         <div class="col-lg-3 col-md-6 d-flex">
           <i class="bi bi-geo-alt icon"></i>
           <div>
-            <h4>Direccion</h4>
+            <h4>Dirección</h4>
             <p>
               Calle Siempreviva 742<br>
               Santiago, Chile.<br>
@@ -127,9 +150,34 @@
 
   </footer><!-- End Footer -->
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center active"><i
-    class="bi bi-arrow-up-short"></i></a>
-    <div id="preloader"></div>
+      class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+
+  <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalError">
+            Ups!.
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Por el momento solo realizamos pedidos vía telefonica o a nuestro wsp +56987654321.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
 </body>
+
+
+
 
 </html>
