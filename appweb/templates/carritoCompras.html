@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+<title>Carrito de compras</title>
+{% endblock %}
+
+{% block contenido %}
+<div class="section-header">
+    <h2>Revisa</h2>
+    <p>Tu <span>Carrito de Compras</span></p>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cart_item in cart_items %}
+        <tr>
+            <td>{{ cart_item.producto.nombre }}</td>
+            <td>${{ cart_item.producto.precio }}</td>
+            <td>
+                <div class="quantity">
+                    <form action="{% url 'decrease_quantity' cart_item.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                    </form>
+                    <span>{{ cart_item.cantidad }}</span>
+                    <form action="{% url 'increase_quantity' cart_item.producto.id %}" method="POST" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-secondary">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </form>
+                </div>
+
+            </td>
+            <td>${{ cart_item.total_item }}</td>
+            <td>
+                <a href="{% url 'remove_from_cart' cart_item.id %}" class="btn btn-danger">Eliminar <i
+                        class="fas fa-trash"></i></a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<p><strong>Total del carrito: ${{ total_carrito }}</strong></p>
+<a href="{% url 'payment' %}" class="btn btn-success btn-lg">Pagar <i class="fa-solid fa-money-bills"></i></a>
+<br>
+{% endblock %}

@@ -31,11 +31,8 @@
   <link href="
   https://cdn.jsdelivr.net/npm/sweetalert2@11.7/dist/sweetalert2.min.css
   " rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-nrCN+7nKfG1eK0cxcv0Xwp1H02KgFe2gacXa2OV1dJiDh0rrLoL9rg8dDLc/Iyyjw53H4XxuN7CvKbZXJ7mpOQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  {% block titulo %}
-  <title></title>
-  {% endblock %}
+  <title>{% block titulo %}  {% endblock %}</title>
 
 </head>
 
@@ -58,45 +55,27 @@
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
-      <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto me-lg-0">
+      <a href="{% url 'perfilAdministrador' %}" class="logo d-flex align-items-center me-auto me-lg-0">
         <h1>El Comilon<span>.</span></h1>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="{% url 'home' %}">Inicio<i class="fa-solid fa-house fa-lg"></i></a></li>
-          <li><a href="{% url 'menu' %}">Menú<i class="fa-solid fa-book-open fa-lg"></i></a></li>
-          <li><a href="{% url 'nosotros' %}">Nosotros<i class="fa-solid fa-circle-info fa-lg"></i></a></li>
-          <li><a href="{% url 'contacto' %}">Contacto<i class="fa-solid fa-phone fa-lg"></i></a></li>
-
+          <li><a href="{% url 'perfilAdministrador' %}">Inicio<i class="fa-solid fa-house fa-lg"></i></a></li>
+          <li><a href="{% url 'reg_Proveedor' %}">Registrar Proveedor<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
+          <li><a href="{% url 'reg_Empresa' %}">Registrar Empresa<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
+          <li><a href="{% url 'reg_prod' %}">Registrar Producto<i class="fa-solid fa-book-open fa-lg"></i></a></li>
           {% if user.is_authenticated %}
-          <!-- Si el usuario pertenece al grupo "Usuario_empresa"-->
-          {% if user.groups.all.0.name == "Usuario_empresa" %}
-          <li><a href="{% url 'perfilUserEmpresa' %}">Perfil<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
-          {% endif %}
-          <!-- Si el usuario pertenece al grupo "Usuario_cliente"-->
-          {% if user.groups.all.0.name == "Usuario" %}
-          <li><a href="{% url 'perfilUser' %}">Perfil<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
-          {% endif %}
           <li><a href="{% url 'logout' %}">Cerrar Sesión<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
           {% else %}
           <li><a href="{% url 'login' %}">Ingresar<i class="fa-solid fa-circle-user fa-lg"></i></a></li>
-          
           {% endif %}
         </ul>
       </nav>
-
-      <a class="btn-book-a-table btn-sm" href="{% url 'compras' %}">Pide Aqui <i class="fa-solid fa-shop fa-xl"></i></a>
-      {% if user.is_authenticated %}
-      <a class="btn-book-a-table btn-sm" href="{% url 'cart_view' %}">Carrito <i
-          class="fa-solid fa-cart-shopping fa-lg"></i></a>
-      {% endif %}
       {% if user.is_authenticated %}
       <a class="button" disabled>Bienvenido {{user.username}} <i
-        class="fa-solid fa-circle-user fa-lg"></i></a>
-      {% else %}
-      <a class="button" href="{% url 'registro' %}">Registrarse <i class="fa-solid fa-circle-user fa-lg"></i></a>
-      {% endif %}
+          class="fa-solid fa-circle-user fa-lg"></i></a>
+          {% endif %}
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
     </div>
@@ -110,7 +89,7 @@
     </div>
   </main>
 
-<br>
+
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
@@ -176,8 +155,6 @@
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center active"><i
       class="bi bi-arrow-up-short"></i></a>
   <div id="preloader"></div>
-
-
 
 </body>
 

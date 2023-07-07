@@ -3,21 +3,15 @@
 {% load static %}
 
 {% block titulo %}
-
 <title>Menú</title>
-
 {% endblock %}
 
 
+
 {% block contenido %}
-
 <!-- ======= Menu Section ======= -->
-
-
-
 <section id="menu" class="menu">
     <div class="container aos-init aos-animate" data-aos="fade-up">
-
         <div class="section-header">
             <h2>Revisa</h2>
             <p>Nuestro <span>Delicioso Menú</span></p>
@@ -25,20 +19,17 @@
 
         <ul class="nav nav-tabs d-flex justify-content-center aos-init aos-animate" data-aos="fade-up"
             data-aos-delay="200" role="tablist">
-
             <li class="nav-item" role="presentation">
                 <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters"
                     aria-selected="true" role="tab">
                     <h4>Entradas</h4>
                 </a>
             </li><!-- End tab nav item -->
-
             <li class="nav-item" role="presentation">
                 <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast" aria-selected="false"
                     tabindex="-1" role="tab">
                     <h4>Platos Principales</h4>
                 </a><!-- End tab nav item -->
-
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch" aria-selected="false"
@@ -46,20 +37,16 @@
                     <h4>Postres</h4>
                 </a>
             </li><!-- End tab nav item -->
-
             <li class="nav-item" role="presentation">
                 <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner" aria-selected="false"
                     tabindex="-1" role="tab">
                     <h4>Liquidos</h4>
                 </a>
             </li><!-- End tab nav item -->
-
         </ul>
 
         <div class="tab-content aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
-
             <div class="tab-pane fade active show" id="menu-starters" role="tabpanel">
-
                 <div class="tab-header text-center">
                     <p>Menu</p>
                     <h3>Entradas</h3>
@@ -70,21 +57,24 @@
                     <div class="col-lg-4 menu-item">
                         <a href="{{ p.imagen.url }}" class="glightbox"><img src="{{ p.imagen.url }}"
                                 class="menu-img img-fluid" alt=""></a>
-                        <h4>{{p.nombre}}</h4>
+                        <h4>{{ p.nombre }}</h4>
                         <p class="ingredients">
-                            {{p.descripcion}}
+                            {{ p.descripcion }}
                         </p>
                         <p class="price">
-                            ${{p.precio}}
+                            ${{ p.precio }}
                         </p>
+                        <form method="POST" action="{% url 'add_to_cart' p.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Agregar al carrito" class="btn btn-primary">
+                        </form>
                     </div><!-- Menu Item -->
                     {% endif %}
                     {% endfor %}
-
                 </div>
             </div>
-            <div class="tab-pane fade" id="menu-breakfast" role="tabpanel">
 
+            <div class="tab-pane fade" id="menu-breakfast" role="tabpanel">
                 <div class="tab-header text-center">
                     <p>Menu</p>
                     <h3>Platos Principales</h3>
@@ -93,17 +83,19 @@
                     {% for p in producto %}
                     {% if p.tipo_plato == 1 %}
                     <div class="col-lg-4 menu-item">
-                        <a href="{{ p.imagen.url }}" class="glightbox">
-                            <img src="{{ p.imagen.url }}" class="menu-img img-fluid same-size-img" alt="">
-                        </a>
-                        
-                        <h4>{{p.nombre}}</h4>
+                        <a href="{{ p.imagen.url }}" class="glightbox"><img src="{{ p.imagen.url }}"
+                                class="menu-img img-fluid" alt=""></a>
+                        <h4>{{ p.nombre }}</h4>
                         <p class="ingredients">
-                            {{p.descripcion}}
+                            {{ p.descripcion }}
                         </p>
                         <p class="price">
-                            ${{p.precio}}
+                            ${{ p.precio }}
                         </p>
+                        <form method="POST" action="{% url 'add_to_cart' p.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Agregar al carrito" class="btn btn-primary">
+                        </form>
                     </div><!-- Menu Item -->
                     {% endif %}
                     {% endfor %}
@@ -111,7 +103,6 @@
             </div>
 
             <div class="tab-pane fade" id="menu-lunch" role="tabpanel">
-
                 <div class="tab-header text-center">
                     <p>Menu</p>
                     <h3>Postres</h3>
@@ -122,21 +113,24 @@
                     <div class="col-lg-4 menu-item">
                         <a href="{{ p.imagen.url }}" class="glightbox"><img src="{{ p.imagen.url }}"
                                 class="menu-img img-fluid" alt=""></a>
-                        <h4>{{p.nombre}}</h4>
+                        <h4>{{ p.nombre }}</h4>
                         <p class="ingredients">
-                            {{p.descripcion}}
+                            {{ p.descripcion }}
                         </p>
                         <p class="price">
-                            ${{p.precio}}
+                            ${{ p.precio }}
                         </p>
+                        <form method="POST" action="{% url 'add_to_cart' p.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Agregar al carrito" class="btn btn-primary">
+                        </form>
                     </div><!-- Menu Item -->
                     {% endif %}
                     {% endfor %}
                 </div>
-
             </div>
-            <div class="tab-pane fade" id="menu-dinner" role="tabpanel">
 
+            <div class="tab-pane fade" id="menu-dinner" role="tabpanel">
                 <div class="tab-header text-center">
                     <p>Menu</p>
                     <h3>Liquidos</h3>
@@ -147,26 +141,24 @@
                     <div class="col-lg-4 menu-item">
                         <a href="{{ p.imagen.url }}" class="glightbox"><img src="{{ p.imagen.url }}"
                                 class="menu-img img-fluid" alt=""></a>
-                        <h4>{{p.nombre}}</h4>
+                        <h4>{{ p.nombre }}</h4>
                         <p class="ingredients">
-                            {{p.descripcion}}
+                            {{ p.descripcion }}
                         </p>
                         <p class="price">
-                            ${{p.precio}}
+                            ${{ p.precio }}
                         </p>
+                        <form method="POST" action="{% url 'add_to_cart' p.id %}">
+                            {% csrf_token %}
+                            <input type="submit" value="Agregar al carrito" class="btn btn-primary">
+                        </form>
                     </div><!-- Menu Item -->
                     {% endif %}
                     {% endfor %}
                 </div>
-            </div><!-- End Lunch Menu Content -->
-
-
-
-        </div><!-- End Dinner Menu Content -->
-
-    </div>
-
-    </div>
-</section>
+            </div><!-- End Dinner Menu Content -->
+        </div><!-- End tab-content -->
+    </div><!-- End container -->
+</section><!-- End Menu Section -->
 
 {% endblock %}

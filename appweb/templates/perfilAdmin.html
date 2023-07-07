@@ -1,0 +1,389 @@
+{% extends 'baseAdmin.html' %}
+
+{% block titulo %} Perfil Administrador{% endblock %}
+
+
+{% block contenido %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-header">
+                <h2>Perfil</h2>
+                <p>Administrador <span>El Comilón</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="menuAdmin" class="menu">
+    <div class="container aos-init aos-animate" data-aos="fade-up">
+
+        <ul class="nav nav-tabs d-flex justify-content-center aos-init aos-animate" data-aos="fade-up"
+            data-aos-delay="200" role="tablist">
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters"
+                    aria-selected="true" role="tab">
+                    <h4>Pedidos</h4>
+                </a>
+            </li><!-- End tab nav item -->
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-breakfast" aria-selected="false"
+                    tabindex="-1" role="tab">
+                    <h4>Productos</h4>
+                </a><!-- End tab nav item -->
+
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-lunch" aria-selected="false"
+                    tabindex="-1" role="tab">
+                    <h4>Proveedores</h4>
+                </a>
+            </li><!-- End tab nav item -->
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#menu-dinner" aria-selected="false"
+                    tabindex="-1" role="tab">
+                    <h4>Empresas</h4>
+                </a>
+            </li><!-- End tab nav item -->
+        </ul>
+
+        <div class="tab-content aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="tab-pane fade active show" id="menu-starters" role="tabpanel">
+
+                <div class="tab-header text-center">
+                    <p>Pedidos</p>
+                    <h3>Pendientes</h3>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Dirección Entrega</th>
+                                            <th scope="col">Telefono Contacto</th>
+                                            <th scope="col">Total Pedido</th>
+                                            <th scope="col">Fecha Entrega</th>
+                                            <th scope="col">Hora Entrega</th>
+                                            <th scope="col">Diario</th>
+                                            <th scope="col">Detalle</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for ped in ped %}
+                                        {% if ped.estado == 0 %}
+
+                                        <tr>
+                                            <th scope="row">{{ ped.id }}</th>
+                                            <td>{{ped.nombre}}</td>
+                                            <td>{{ped.apellido}}</td>
+                                            <td>{{ped.direccion}}</td>
+                                            <td>{{ped.telefono}}</td>
+                                            <td>${{ped.total}}</td>
+                                            <td>
+                                                {% if ped.fecha_entrega %}
+                                                {{ped.fecha_entrega|date:"d-m-Y"}}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if ped.hora_entrega %}
+                                                {{ped.hora_entrega|time:"H:i"}}
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if ped.programar_diariamente == True %}
+                                                Si
+                                                {% else %}
+                                                No
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-primary btn-sm"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#modalDetallePedido{{ped.id}}">
+                                                    Ver Detalle
+                                                </button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-success btn-sm"
+                                                    onclick="aprobarPedido('{{ ped.id }}')">Aprobar <i
+                                                    class="fa-solid fa-check"></i></button>
+                                                <button type="button" class="btn btn-danger btn-sm"
+                                                    onclick="rechazarPedido('{{ ped.id }}')">Rechazar <i
+                                                    class="fa-solid fa-xmark"></i></button>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+
+            {% for ped in ped %}
+            <div class="modal fade" id="modalDetallePedido{{ ped.id }}" tabindex="-1"
+                aria-labelledby="modalDetallePedido{{ ped.id }}Label" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modalDetallePedido{{ ped.id }}Label">Detalle del Pedido</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Producto</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in detaPed %}
+                                    {% if item.pedido.id == ped.id %}
+                                    <tr>
+                                        <td>{{ item.producto.nombre }}</td>
+                                        <td>{{ item.cantidad }}</td>
+                                        <td>${{ item.total_item }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+
+
+            <div class="tab-pane fade" id="menu-breakfast" role="tabpanel">
+
+                <div class="tab-header text-center">
+                    <p>Nuestros</p>
+                    <h3>Productos</h3>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Precio</th>
+                                            <th scope="col">Tipo Plato</th>
+                                            <th scope="col">Origen</th>
+                                            <th scope="col">Autor</th>
+                                            <th scope="col">Vendidos</th>
+                                            <th scope="col">Disponibilidad</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for prod in prod %}
+                                        <tr>
+                                            <th scope="row">{{ prod.id }}</th>
+                                            <td>{{prod.nombre}}</td>
+                                            <td>${{prod.precio}}</td>
+                                            <td>
+
+                                                {% if prod.tipo_plato == 0 %}
+                                                Entrada
+                                                {% elif prod.tipo_plato == 1 %}
+                                                Plato Principal
+                                                {% elif prod.tipo_plato == 2 %}
+                                                Postre
+                                                {% elif prod.tipo_plato == 3 %}
+                                                Liquido
+                                                {% endif %}
+
+                                            </td>
+                                            <td>
+
+                                                {% if prod.origen == 0 %}
+                                                Propio
+                                                {% elif prod.origen == 1 %}
+                                                Externo
+                                                {% endif %}
+
+                                            </td>
+                                            <td>{{prod.autor}}</td>
+                                            <td>{{prod.cantidadVendidos}}</td>
+                                            <td>
+
+                                                {% if prod.disponible == 0 %}
+                                                Disponible
+                                                {% elif prod.disponible == 1 %}
+                                                No Disponible
+                                                {% endif %}
+
+                                            </td>
+                                            <td>
+                                                <a href="" class="btn btn-success btn-sm">Modificar <i
+                                                        class="fa-solid fa-check"></i></a>
+                                                <a href="" class="btn btn-danger btn-sm">Eliminar <i
+                                                        class="fa-solid fa-xmark"></i></a>
+
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="menu-lunch" role="tabpanel">
+
+                <div class="tab-header text-center">
+                    <p>Nuestros</p>
+                    <h3>Proveedores</h3>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Rut</th>
+                                            <th scope="col">Correo</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Listar los usuarios del grupo "Artista"-->
+                                        {% for prov in prov %}
+                                        <tr>
+                                            <th scope="row">{{ prov.id }}</th>
+                                            <td>{{prov.first_name}}</td>
+                                            <td>{{prov.last_name}}</td>
+                                            <td>{{prov.email}}</td>
+                                            <td>
+                                                <a href="" class="btn btn-success btn-sm">Modificar <i
+                                                        class="fa-solid fa-check"></i></a>
+                                                <a href="" class="btn btn-danger btn-sm">Eliminar <i
+                                                        class="fa-solid fa-xmark"></i></a>
+
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="menu-dinner" role="tabpanel">
+
+                <div class="tab-header text-center">
+                    <p>Nuestras</p>
+                    <h3>Empresas Socias</h3>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Rut</th>
+                                            <th scope="col">Correo</th>
+                                            <th scope="col">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Listar los usuarios del grupo "Artista"-->
+                                        {% for emp in emp %}
+                                        <tr>
+                                            <th scope="row">{{ emp.id }}</th>
+                                            <td>{{emp.first_name}}</td>
+                                            <td>{{emp.last_name}}</td>
+                                            <td>{{emp.email}}</td>
+                                            <td>
+                                                <a href="" class="btn btn-success btn-sm">Modificar <i
+                                                        class="fa-solid fa-check"></i></a>
+                                                <a href="" class="btn btn-danger btn-sm">Eliminar <i
+                                                        class="fa-solid fa-xmark"></i></a>
+
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- End Lunch Menu Content -->
+
+
+
+        </div><!-- End Dinner Menu Content -->
+
+    </div>
+
+    </div>
+</section>
+
+<script>
+    function aprobarPedido(pedidoId) {
+        Swal.fire({
+            title: "Advertencia",
+            text: "¿Estás seguro que deseas aprobar el pedido?",
+            icon: "question",
+            showCancelButton: true,
+            cancelButtonText: "No, cancelar",
+            confirmButtonText: "Sí, aprobar"
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                window.location.href = "/aprobar-pedidos/" + pedidoId + "/";
+            }
+        });
+    }
+
+    function rechazarPedido(pedidoId) {
+        Swal.fire({
+            title: "Advertencia",
+            text: "¿Estás seguro que deseas rechazar el pedido?",
+            icon: "question",
+            showCancelButton: true,
+            cancelButtonText: "No, cancelar",
+            confirmButtonText: "Sí, rechazar"
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                window.location.href = "/rechazar-pedido/" + pedidoId + "/";
+            }
+        });
+    }
+</script>
+
+
+
+
+{% endblock %}

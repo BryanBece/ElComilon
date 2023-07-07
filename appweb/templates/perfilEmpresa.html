@@ -1,0 +1,115 @@
+{% extends 'baseEmpresa.html' %}
+
+{% block titulo %}  Perfil Empresa{% endblock %}
+
+
+{% block contenido %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="section-header">
+                <h2>Perfil</h2>
+                <p>Empresa <span>El Comilón</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="menuAdmin" class="menu">
+    <div class="container aos-init aos-animate" data-aos="fade-up">
+
+        <ul class="nav nav-tabs d-flex justify-content-center aos-init aos-animate" data-aos="fade-up"
+            data-aos-delay="200" role="tablist">
+
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active show" data-bs-toggle="tab" data-bs-target="#menu-starters"
+                    aria-selected="true" role="tab">
+                    <h4>Usuarios</h4>
+                </a>
+            </li><!-- End tab nav item -->
+        </ul>
+
+        <div class="tab-content aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+
+            <div class="tab-pane fade active show" id="menu-starters" role="tabpanel">
+
+                <div class="tab-header text-center">
+                    <p>Tus</p>
+                    <h3>Usuarios</h3>
+                </div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Nombre</th>
+                                            <th scope="col">Apellido</th>
+                                            <th scope="col">Correo</th>
+                                            <th scope="col">Saldo</th>
+                                            <th scope="col">Asignar Saldo</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for usu in usu %}
+                                        {% if usu.empresa == empresa %}
+                                        {% for usuEmp in usuEmp %}
+                                        {% if usuEmp.empresa == usu %}
+                                        {% if usuEmp.estado == 0 %}
+                                    
+
+                                        <tr>
+                                            <th scope="row" name="id">{{ usu.id }}</th>
+                                            <td>{{usu.first_name}}</td>
+                                            <td>{{usu.last_name}}</td>
+                                            <td>{{usu.email}}</td>
+                                            <td>{{usuEmp.saldo}}</td>
+                                   
+                                            <td>
+                                                <form action="" method="post" class="form-label">
+                                                    {% csrf_token %}
+                                                    <input type="number" name="saldo" id="saldo">
+                                                    <input type="hidden" name="id" value="{{ usu.id }}">
+                                                    <button type="submit" value="Asignar" class="btn btn-dark"> Asignar </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        {% endif %}
+                                        {% endif %}
+                                        {% endfor %}
+                                        {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function DesactivarEmpleado(id) {
+Swal.fire({
+    title: "Advertencia",
+    text: "¿Estás seguro que deseas desactivar el empleado?",
+    icon: "question",
+    showCancelButton: true,
+    cancelButtonText: "No, cancelar",
+    confirmButtonText: "Sí, desactivar"
+}).then(function(result) {
+    if (result.isConfirmed) {
+        document.getElementById('desactivarForm').action = "/desactivar-empleado/" + id + "/";
+        document.getElementById('desactivarForm').submit();
+    }
+});
+}
+
+</script>
+
+{% endblock %}

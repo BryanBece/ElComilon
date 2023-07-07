@@ -10,24 +10,25 @@ class ContactoForm(forms.ModelForm):
 class ProductoForm(forms.ModelForm):
     class Meta:
         model = Producto
-        fields = "__all__"
+        fields = "nombre", "descripcion", "precio", "imagen", "tipo_plato", "disponible", "origen"
 
+class usuarioEmpresaForm(forms.ModelForm):
+    contrasena = forms.CharField(widget=forms.PasswordInput())
+    class Meta:
+        model = usuarioEmpresa
+        fields = "nombre", "apellido", "correo", "contrasena", "saldo"
 
-from django.contrib.auth import get_user_model
+class pedidoForm(forms.ModelForm):
 
-class LoginForm(forms.Form):
-    username = forms.CharField(label='Nombre de usuario')
-    password = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
-
-    def clean(self):
-        cleaned_data = super().clean()
-        username = cleaned_data.get('username')
-        password = cleaned_data.get('password')
-
-        if username and password:
-            User = get_user_model()
-            user = User.objects.filter(username=username).first()
-            if user is None or not user.check_password(password):
-                raise forms.ValidationError('Nombre de usuario o contraseña incorrectos.')
-        return cleaned_data
-        
+    class Meta:
+        model = Pedido
+        fields = ["nombre", "apellido", "telefono", "direccion", "programar_diariamente", "fecha_entrega", "hora_entrega"]
+        widgets = {
+            "fecha_entrega": forms.DateTimeInput(attrs={'type':'date'}, format=('%Y-%m-%d')),
+            "hora_entrega": forms.DateTimeInput(attrs={'type':'time'}, format=('%H:%M')),
+        }
+        labels = {
+            "fecha_entrega": "Fecha de entrega (Lunes a Sabado)",
+            "hora_entrega": "Hora de entrega (10AM a 8PM)",
+            "programar_diariamente" : "Programar entrega de Lunes a Viernes",
+        }
