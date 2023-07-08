@@ -51,6 +51,7 @@
                                             <th scope="col">Correo</th>
                                             <th scope="col">Saldo</th>
                                             <th scope="col">Asignar Saldo</th>
+                                            <th scope="col">Acciones </th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -63,9 +64,9 @@
 
                                         <tr>
                                             <th scope="row" name="id">{{ usu.id }}</th>
-                                            <td>{{usu.first_name}}</td>
-                                            <td>{{usu.last_name}}</td>
-                                            <td>{{usu.email}}</td>
+                                            <td>{{usuEmp.nombre }}</td>
+                                            <td>{{usuEmp.apellido}}</td>
+                                            <td>{{usuEmp.correo}}</td>
                                             <td>{{usuEmp.saldo}}</td>
                                    
                                             <td>
@@ -75,6 +76,12 @@
                                                     <input type="hidden" name="id" value="{{ usu.id }}">
                                                     <button type="submit" value="Asignar" class="btn btn-dark"> Asignar </button>
                                                 </form>
+                                            </td>
+                                            <td>
+                                                <a href="{% url 'modificar_usuario' usuEmp.id %}" class="btn btn-success">Modificar <i class="fa-regular fa-pen-to-square"></i></a>
+
+                                                <button class="btn btn-danger" onclick="eliminarUsuarioEmp('{{ usuEmp.id }}')">Eliminar <i
+                                                        class="fa-solid fa-xmark"></i></button>
                                             </td>
                                         </tr>
                                         {% endif %}
@@ -94,21 +101,21 @@
 </section>
 
 <script>
-function DesactivarEmpleado(id) {
-Swal.fire({
-    title: "Advertencia",
-    text: "¿Estás seguro que deseas desactivar el empleado?",
-    icon: "question",
-    showCancelButton: true,
-    cancelButtonText: "No, cancelar",
-    confirmButtonText: "Sí, desactivar"
-}).then(function(result) {
-    if (result.isConfirmed) {
-        document.getElementById('desactivarForm').action = "/desactivar-empleado/" + id + "/";
-        document.getElementById('desactivarForm').submit();
+
+    function eliminarUsuarioEmp(usuarioId) {
+        Swal.fire({
+            title: "Advertencia",
+            text: "¿Estás seguro que deseas eliminar el usuario?",
+            icon: "question",
+            showCancelButton: true,
+            cancelButtonText: "No, cancelar",
+            confirmButtonText: "Sí, eliminar"
+        }).then(function (result) {
+            if (result.isConfirmed) {
+                window.location.href = "/eliminar-usuario-emp/" + usuarioId + "/";
+            }
+        });
     }
-});
-}
 
 </script>
 

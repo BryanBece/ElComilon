@@ -31,5 +31,14 @@ urlpatterns = [
     path('perfilUserEmpresa/', perfilUsuarioEmpresa, name='perfilUserEmpresa'),
     path('aprobar-pedidos/<int:pedido_id>/', views.aprobar_pedidos, name='aprobar_pedidos'),
     path('rechazar-pedido/<int:pedido_id>/', views.rechazar_pedido, name='rechazar_pedido'),
+    path('entregar-pedidos/<int:pedido_id>/', views.entregar_pedido, name='entregar_pedido'),
+    path('modificar-producto/<int:producto_id>/', views.modificar_producto, name='modificar_producto'),
+    path('eliminar-producto/<int:producto_id>/', views.eliminar_producto, name='eliminar_producto'),
+    path('modificar-proveedor/<int:proveedor_id>/', views.modificar_proveedor, name='modificar_proveedor'),
+    path('eliminar-proveedor/<int:proveedor_id>/', views.eliminar_proveedor, name='eliminar_proveedor'),
+    path('modificar-empresa/<int:empresa_id>/', views.modificar_empresa, name='modificar_empresa'),
+    path('eliminar-empresa/<int:empresa_id>/', views.eliminar_empresa, name='eliminar_empresa'),
+    path('modificar-usuario/<int:usuario_empresa_id>/', views.modificar_usuario_empresa, name='modificar_usuario'),
+    path('eliminar-usuario-emp/<int:usuario_empresa_id>/', views.eliminar_usuario_empresa, name='eliminar_usuario'),
 
 ]

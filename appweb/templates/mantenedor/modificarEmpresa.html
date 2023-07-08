@@ -1,0 +1,146 @@
+{% extends 'baseAdmin.html' %}
+
+{% block titulo %}Registro Empresa{% endblock %}
+
+{% load static %}
+
+{% block contenido %}
+
+<section>
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-xl-10">
+                <div>
+                    <div class="row g-0">
+                        <div class="col-md-6 col-lg-5 d-none d-md-block">
+                            <img src="{% static './images/Restorant/Restorant-2.png' %}" alt=""
+                                class="d-block w-100 img-fluid"
+                                style="border-radius: 10px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); max-height: 100%" />
+                        </div>
+                        <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+                                <form class="row" id="RegisterForm" action="" method="POST">
+                                    {% csrf_token %}
+                                    <div class="section-header">
+                                        <h2>Modificar Empresa en</h2>
+                                        <p>El <span>Comilon</span></p>
+                                    </div>
+
+                                    <h5 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px">
+                                        Modificación de cuenta empresa
+                                    </h5>
+                                    <div class="form-group">
+                                        <label for="nombre">Nombre Empresa:</label>
+                                        <input type="text" class="form-control" name="nombre" required value="{{ empresa.first_name }}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nombre">Rut Empresa:</label>
+                                        <input type="text" class="form-control" name="rutEmpresa" required value="{{ empresa.last_name }}"> 
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nombre">Correo:</label>
+                                        <input type="text" class="form-control" name="correo" required value="{{ empresa.email }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nombre">Password:</label>
+                                        <input type="password" class="form-control" name="password1" required>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="nombre">Repita su Password:</label>
+                                        <input type="password" class="form-control" name="password2" required>
+                                    </div>
+
+                                    <div class="pt-1 mb-4">
+                                        <button class="btn btn-dark btn-lg btn-block" type="submit">
+                                            Modificar Empresa <i class="fa-regular fa-pen-to-square"></i>
+                                        </button>
+                                        <a href="{% url 'perfilAdministrador' %}" class="btn btn-danger btn-lg btn-block">Volver <i class="fa-solid fa-backward-step"></i></a>
+                                    </div>
+
+                                    <a href="#" class="small text-muted" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal2">Terminos
+                                        y Condiciones.</a>
+                                    <a href="#!" class="small text-muted" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal3">Politica
+                                        de privacidad.</a>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Modal Terminos y Condiciones -->
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel2">
+                    Terminos y Condiciones
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                interdum lacinia porttitor. Etiam vulputate quis ipsum in mollis.
+                Vivamus sed mi justo. Mauris ultrices nisl vel nisi cursus placerat.
+                Suspendisse dignissim nunc in sapien posuere blandit. Vestibulum
+                ante ipsum primis in faucibus orci luctus et ultrices posuere
+                cubilia curae; Vivamus iaculis, erat ut ultricies faucibus, nisi
+                eros vulputate nisi, eget tempus libero diam in urna. Integer
+                egestas fringilla orci, nec bibendum lectus pellentesque eu. Vivamus
+                tincidunt est nulla, a tincidunt tortor varius commodo. Nunc laoreet
+                congue quam non congue. Aenean sit amet lacus metus. Nunc eros
+                magna, ornare non ligula.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Politica de Privacidad -->
+<div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel3">
+                    Politica de Privacidad
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+                interdum lacinia porttitor. Etiam vulputate quis ipsum in mollis.
+                Vivamus sed mi justo. Mauris ultrices nisl vel nisi cursus placerat.
+                Suspendisse dignissim nunc in sapien posuere blandit. Vestibulum
+                ante ipsum primis in faucibus orci luctus et ultrices posuere
+                cubilia curae; Vivamus iaculis, erat ut ultricies faucibus, nisi
+                eros vulputate nisi, eget tempus libero diam in urna. Integer
+                egestas fringilla orci, nec bibendum lectus pellentesque eu. Vivamus
+                tincidunt est nulla, a tincidunt tortor varius commodo. Nunc laoreet
+                congue quam non congue. Aenean sit amet lacus metus. Nunc eros
+                magna, ornare non ligula.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -123,8 +123,15 @@
                                                 <td>
                                                     {% if ped.estado == 0 %}
                                                     Pendiente
-                                                    {% else %}
-                                                    Aceptado
+                                                    {% endif %}
+                                                    {% if ped.estado == 1 %}
+                                                    En Proceso
+                                                    {% endif %}
+                                                    {% if ped.estado == 2 %}
+                                                    Cancelado
+                                                    {% endif %}
+                                                    {% if ped.estado == 3 %}
+                                                    Entregado
                                                     {% endif %}
                                                 </td>
                                             </tr>
